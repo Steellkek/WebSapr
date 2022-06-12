@@ -41,8 +41,6 @@ namespace WebApplication1
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllers();
             });
-
-            var graph = new Graph();
         }
     }
 }

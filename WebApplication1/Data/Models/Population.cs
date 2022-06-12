@@ -38,8 +38,8 @@ public class Population
             Console.Write("");
             for (int i = 0; i < population.Count; i++)
             {
-                var y = ran.NextDouble();
-                if (y<chanes[0])
+                var chanse = ran.NextDouble();
+                if (chanse<chanes[0])
                 {
                     Parents.Add(population[0]);
                     continue;
@@ -47,22 +47,18 @@ public class Population
 
                 for (int j = 1; j < chanes.Length; j++)
                 {
-                    if ((y<chanes[j])&(y>chanes[j-1]))
+                    if ((chanse<chanes[j])&(chanse>chanes[j-1]))
                     {
                         Parents.Add(population[j]);
                         break;
                     }
                 }
-                //Console.WriteLine(5);
-
             }
-
         }
         else
         {
             Parents = population.GetRange(0,population.Count);
         }
-        //Console.WriteLine(5);
     }
 
     public void CalculateAverFitness()
@@ -80,13 +76,10 @@ public class Population
         child2.Gen = Parents[index2].Gen.GetRange(0, j);
         child1.GetChild(child1,Parents[index2],_graph);
         child2.GetChild(child2,Parents[index1],_graph);
-        //Console.WriteLine(5);
         population[index1].Gen = child1.Gen.GetRange(0,child1.Gen.Count);
         population[index2].Gen = child2.Gen.GetRange(0,child2.Gen.Count);
-        //Console.WriteLine(5);
         population[index1].DetermineFitnes(_graph);
         population[index2].DetermineFitnes(_graph);
-        //Console.WriteLine(5);
     }
 
     public void FaildCrossover(int index1,int index2)
@@ -105,14 +98,12 @@ public class Population
         {
             p2=Ran.Next(population[index].Gen.Count);
         }
-
         (population[index].Gen[p1], population[index].Gen[p2]) = (population[index].Gen[p2], population[index].Gen[p1]);
         population[index].DetermineFitnes(_graph);
     }
 
     public void Inversion(int index)
     {
-        //Console.WriteLine(5);
         Random ran = new();
         int side = ran.Next(0, 2);
         var point = ran.Next(population[index].Gen.Count);
@@ -125,6 +116,5 @@ public class Population
             population[index].Gen.Reverse(point, population[index].Gen.Count-point);
         }
         population[index].DetermineFitnes(_graph);
-        //Console.WriteLine(5);
     }
 }

@@ -52,20 +52,18 @@ async function  graph(){
 
 
         });
-        cy.startBatch()
         graph.vertexs.forEach(((vertex) => {
             cy.add([{group: 'nodes', data: {id: 'v' + vertex.number}, position: {x: 0, y: 0}}])
 
         }))
-        var l = 0;
+        var NumberOfEdge = 0;
         graph.edges.forEach(((edge) => {
             cy.add([{
                 group: 'edges',
-                data: {id: 'e' + l, source: 'v' + edge.v1.number, target: 'v' + edge.v2.number, label: edge.weight}
+                data: {id: 'e' + NumberOfEdge, source: 'v' + edge.v1.number, target: 'v' + edge.v2.number, label: edge.weight}
             }])
-            l += 1;
+            NumberOfEdge += 1;
         }))
-        cy.endBatch();
         cy.layout({name: 'circle'}).run();
         cy.layout({name: 'circle'}).stop();
 
@@ -75,6 +73,7 @@ async function  graph(){
         document.getElementById("ChanseMutation").innerText = "";
         document.getElementById("ChanseInversion").innerText = "";
         document.getElementById("CF").innerText = "";
+        document.getElementById("NeedSplit").innerText = "";
         document.getElementById("Split").innerText = "";
         document.getElementById("TimeBestGen").innerText = "";
         document.getElementById("Time").innerText = "";
@@ -170,15 +169,14 @@ async function  gengraph(){
                         'text-outline-color': 'black'
                     })
             });
-
             for (let i = 0; i < genalg.bestGen.split.length; i++) {
-                cy.add([{group: 'nodes', data: {id: 'x' + (i + 1)}}])
+                cy.add([{group: 'nodes', data: {id: 'g' + (i + 1)}}])
             }
             var Split = "|";
             var m = 1;
             var n = 0;
             genalg.bestGen.gen.forEach(((vertex) => {
-                cy.add([{group: 'nodes', data: {id: "v" + vertex.number, parent: 'x' + m}}])
+                cy.add([{group: 'nodes', data: {id: "v" + vertex.number, parent: 'g' + m}}])
                 Split += "v" + vertex.number + " "
                 n += 1;
                 if (genalg.bestGen.split[m - 1] == n) {
@@ -188,13 +186,13 @@ async function  gengraph(){
                 }
             }))
 
-            var l = 0;
+            var NumberOfEdge = 0;
             genalg._graph.edges.forEach(((edge) => {
                 cy.add([{
                     group: 'edges',
-                    data: {id: 'e' + l, source: 'v' + edge.v1.number, target: 'v' + edge.v2.number, label: edge.weight}
+                    data: {id: 'e' + NumberOfEdge, source: 'v' + edge.v1.number, target: 'v' + edge.v2.number, label: edge.weight}
                 }])
-                l += 1;
+                NumberOfEdge += 1;
             }))
 
             cy.layout({name: 'circle'}).run();
@@ -241,7 +239,7 @@ async function  newgraph(){
 
                     let cy = cytoscape({
 
-                        container: document.getElementById('cy'), // container to render in
+                        container: document.getElementById('cy'), 
 
                         elements: [],
 
@@ -312,18 +310,18 @@ async function  newgraph(){
                         cy.add([{group: 'nodes', data: {id: 'v' + vertex.number}, position: {x: 0, y: 0}}])
 
                     }))
-                    var l = 0;
+                    var NumberOfEdge = 0;
                     graph.edges.forEach(((edge) => {
                         cy.add([{
                             group: 'edges',
                             data: {
-                                id: 'e' + l,
+                                id: 'e' + NumberOfEdge,
                                 source: 'v' + edge.v1.number,
                                 target: 'v' + edge.v2.number,
                                 label: edge.weight
                             }
                         }])
-                        l += 1;
+                        NumberOfEdge += 1;
                     }))
 
                     cy.layout({name: 'circle'}).run();
@@ -335,6 +333,7 @@ async function  newgraph(){
                     document.getElementById("ChanseMutation").innerText = "";
                     document.getElementById("ChanseInversion").innerText = "";
                     document.getElementById("CF").innerText = "";
+                    document.getElementById("NeedSplit").innerText = "";
                     document.getElementById("Split").innerText = "";
                     document.getElementById("TimeBestGen").innerText = "";
                     document.getElementById("Time").innerText = "";

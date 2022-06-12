@@ -26,9 +26,13 @@ public class GraphController : Controller
             Matrix = lf.ReadGraph()
         };
         graph.CreateGraph();
-        GenAlg v = new GenAlg(graph);
-        v.Go();
-        return Task.FromResult<ActionResult<GenAlg>>(v);
+        GenAlg genAlg = new GenAlg(graph);
+        genAlg.Go();
+        if (genAlg.BestGen.Gen!=null)
+        {
+            lf.WriteResult(genAlg);
+        }
+        return Task.FromResult<ActionResult<GenAlg>>(genAlg);
     }
     
     [HttpGet("{number}")]

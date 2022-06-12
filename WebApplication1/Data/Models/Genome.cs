@@ -2,50 +2,44 @@ namespace SApr.models;
 
 public class Genome
 {
-    public List<int> Split { get; }
+    public List<int> Split;
     public List<Vertex> Gen;
     public int Fitness;
     public long time;
-    public static Graph _graph;
+    private Graph _graph;
 
     public Genome()
     {
         Split=new LocalFile().ReadSplit();
     }
-    public Genome(Graph g)
+    public Genome(Graph graph)
     {
-        _graph = g;
+        _graph = graph;
         Split=new LocalFile().ReadSplit();
-        Gen = Shuffle(g);
-        DetermineFitnes(g);
+        Gen = Shuffle(graph);
+        DetermineFitnes(graph);
     }
 
 
-    private static List<Vertex> Shuffle(Graph g)
+    private static List<Vertex> Shuffle(Graph graph)
     {
         Random rand = new Random();
-
-        List<Vertex> list = g.Vertexs.GetRange(0, g.Vertexs.Count);
-
+        List<Vertex> list = graph.Vertexs.GetRange(0, graph.Vertexs.Count);
         for (int i = list.Count - 1; i >= 1; i--)
         {
             int j = rand.Next(i + 1);
-
             (list[j], list[i]) = (list[i], list[j]);
         }
-
         return list;
     }
 
     public void DetermineFitnes(Graph g)
     {
         Fitness = 0;
-
-        int l = 0;
+        int length = 0;
         foreach (var x in Split)
         {
-            var t = new List<Vertex>();
-            var y = Gen.GetRange(l,  x);
+            var y = Gen.GetRange(length,  x);
             foreach (var j in y)
             {
                 var v = j.GetAdjVerts().GetRange(0,j.GetAdjVerts().Count).Intersect(y).ToList();
@@ -55,13 +49,9 @@ public class Genome
                         .Where(x => ((x.V1 == vertex) ^ (x.V2 == vertex))&((x.V1 == j) ^ (x.V2 == j)))
                         .Sum(x => x.Weight);
                 }
-                
             }
-
-            l += x;
-            //Console.WriteLine(5);
+            length += x;
         }
-
         Fitness = Fitness / 2;
     }
 

@@ -6,7 +6,7 @@ public class Vertex
 
     private List<Vertex> AdjVert = new List<Vertex>();
 
-    public int Degre = 0;
+
     public Vertex(int number)
     {
         Number = number;

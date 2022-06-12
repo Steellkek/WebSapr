@@ -8,7 +8,7 @@ public class LocalFile
     public List<List<int>> ReadGraph()
     {
         List<List<int>> matrix = new();
-        int L=1;
+        int length=1;
         XmlDocument xDoc = new XmlDocument();
         xDoc.Load("Files/File.xml");
         var xRoot = xDoc.SelectSingleNode("root/graph");
@@ -19,8 +19,7 @@ public class LocalFile
             {
                 if (childnode.Name=="n")
                 {
-                    L = Int32.Parse(childnode.InnerText);
-
+                    length = Int32.Parse(childnode.InnerText);
                 }
 
                 if (childnode.Name=="matrix")
@@ -28,17 +27,13 @@ public class LocalFile
                     matrix = childnode.InnerText
                         .Split(Array.Empty<string>(), StringSplitOptions.RemoveEmptyEntries)
                         .Select((s, i) => new { N = int.Parse(s), I = i})
-                        .GroupBy(at => at.I/L, at => at.N, (k, g) => g.ToList())
+                        .GroupBy(at => at.I/length, at => at.N, (k, g) => g.ToList())
                         .ToList();;   
                 }
-                
-
             }
         }
         return matrix;
     }
-    
-
     public List<int> ReadSplit()
     {
         List<int> split;
@@ -63,9 +58,7 @@ public class LocalFile
             {
                 matrix += x[i, j] + " ";
             }
-
             matrix += "\n";
-
         }  
         XmlDocument xDoc = new XmlDocument();
         xDoc.Load("Files/File.xml");
@@ -74,20 +67,16 @@ public class LocalFile
         {
             foreach (XmlElement xnode in xRoot)
             {
-                // обходим все дочерние узлы элемента user
                 foreach (XmlNode childnode in xnode.ChildNodes)
                 {
                     if (childnode.Name=="n")
                     {
                         childnode.InnerText = n.ToString();
-
                     }
-
                     if (childnode.Name=="matrix")
                     {
                         childnode.InnerText = matrix;
                     }
-                    
                 }
             }
         }
@@ -95,9 +84,9 @@ public class LocalFile
         var split = "";
         while (n!=0)
         {
-            var y = ran.Next(1, n);
-            split += y + " ";
-            n -= y;
+            var random = ran.Next(1, n);
+            split += random + " ";
+            n -= random;
         }
         var xNode = xDoc.SelectSingleNode("root/split");
         xNode.InnerText = split;
@@ -118,5 +107,56 @@ public class LocalFile
             }
         }
         return split;
+    }
+
+    public void WriteResult(GenAlg genAlg)
+    {
+        XmlDocument xDoc = new XmlDocument();
+        xDoc.Load("Files/Result.xml");
+        var xRoot = xDoc.SelectSingleNode("root/Result");
+        if (xRoot != null)
+        {
+            foreach (XmlNode childnode in xRoot.ChildNodes)
+            {
+                if (childnode.Name=="Split")
+                {
+                    var Split = "|";
+                    var m = 1;
+                    var n = 0;
+                    foreach (var vertex in genAlg.BestGen.Gen)
+                    {
+                        Split += "v" + vertex.Number + " ";
+                        n += 1;
+                        if (genAlg.BestGen.Split[m - 1] == n) {
+                            n = 0;
+                            m += 1;
+                            Split += "|";
+                        }
+                    }
+
+                    childnode.InnerText = Split;
+                }
+
+                if (childnode.Name=="Fitness")
+                {
+                    childnode.InnerText = genAlg.BestGen.Fitness.ToString();
+                }
+
+                if (childnode.Name=="TimeBestGen")
+                {
+                    childnode.InnerText = genAlg.BestGen.time.ToString();
+                }
+                if (childnode.Name=="Time")
+                {
+                    childnode.InnerText = genAlg.time.ToString();
+                }
+
+                if (childnode.Name=="Matrix")
+                {
+                    childnode.InnerText = genAlg._graph.WriteMatrix();
+                }
+            }
+        }
+        xDoc.Save("Files/Result.xml");
     }
 }

@@ -4,12 +4,12 @@ namespace SApr.models;
 
 public class GenAlg
 {
-    public int CountGenome { get; set; }
-    public int Iteration{ get; set; }
-    public double ChanseCrosover{ get; set; }
-    public double ChanseMutation{ get; set; }
-    public double ChanseInversion{ get; set; }
-    public Graph _graph{ get; set; }
+    public int CountGenome;
+    public int Iteration;
+    public double ChanseCrosover;
+    public double ChanseMutation;
+    public double ChanseInversion;
+    public Graph _graph;
     public long time;
     public Genome BestGen = new();
     private Population _population;
@@ -31,47 +31,35 @@ public class GenAlg
         stopwatch.Start();
         _population = new Population(_graph);
         _population.CreateStartedPopulation(CountGenome);
-        //Console.WriteLine(5);
         for (int i = 0; i < Iteration; i++)
         {
             Crossingover();
             Mutations();
-
             Inversions();
-
             _population.CalculateAverFitness();
             GetBestGen(stopwatch);
-            //Console.WriteLine(5);
-
-        }
-
-        if (BestGen==null)
-        {
-            BestGen = _population.population[0];
         }
         stopwatch.Stop();
-    
-        time=stopwatch.ElapsedMilliseconds;
+    time=stopwatch.ElapsedMilliseconds;
     }
 
     public void GetBestGen(Stopwatch stopwatch)
     {
-        var b = _population.population.OrderBy(x => x.Fitness).Last();
-        if (b.Fitness>BestGen.Fitness)
+        var VarBestGen = _population.population.OrderBy(x => x.Fitness).Last();
+        if (VarBestGen.Fitness>BestGen.Fitness)
         {
-            //Console.WriteLine(5);
-            BestGen.Fitness = b.Fitness;
-            BestGen.Gen = b.Gen.GetRange(0,b.Gen.Count);
+            BestGen.Fitness = VarBestGen.Fitness;
+            BestGen.Gen = VarBestGen.Gen.GetRange(0,VarBestGen.Gen.Count);
             BestGen.time = stopwatch.ElapsedMilliseconds;
         }
     }
     public void Inversions()
     {
         Random ran = new();
-        var y = ran.NextDouble();
+        var chanse = ran.NextDouble();
         for (int i = 0; i < _population.population.Count; i++)
         {
-            if (y<ChanseMutation)
+            if (chanse<ChanseMutation)
             {
                 _population.Inversion(i);
             }
@@ -82,10 +70,10 @@ public class GenAlg
     public void Mutations()
     {
         Random ran = new();
-        var y = ran.NextDouble();
+        var chanse = ran.NextDouble();
         for (int i = 0; i < _population.population.Count; i++)
         {
-            if (y < ChanseInversion)
+            if (chanse < ChanseInversion)
             {
                 _population.Mutation(i);
             }
@@ -95,12 +83,12 @@ public class GenAlg
     public void Crossingover()
     {
         Random ran = new();
-        var y = ran.NextDouble();
+        var chanse = ran.NextDouble();
         _population.CreateNewParents();
 
         for (int j = 0; j < _population.population.Count-1; j+=2)
         {
-            if (y<ChanseCrosover)
+            if (chanse<ChanseCrosover)
             {
                 _population.Crossover(j,j+1);
             }
@@ -109,10 +97,10 @@ public class GenAlg
                 _population.FaildCrossover(j,j+1);
             }
 
-            y = ran.NextDouble();
+            chanse = ran.NextDouble();
         }
 
-        if ((_population.population.Count % 2 == 1) & (y<ChanseCrosover))
+        if (_population.population.Count % 2 == 1)
         {
              _population.population[_population.population.Count-1] = _population.Parents[_population.population.Count-1];
         }

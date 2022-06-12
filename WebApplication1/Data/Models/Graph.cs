@@ -5,7 +5,6 @@ public class Graph
     public List<List<int>> Matrix { get; set; }
     public List<Edge> Edges = new();
     public List<Vertex> Vertexs=new();
-    public int SumDegVert = 0;
 
     public void AddVertex(int number)
     {
@@ -19,41 +18,20 @@ public class Graph
     }
     
 
-    public void WriteMatrix()
+    public string WriteMatrix()
     {
+        var matrix = "";
         for (int i = 0; i < Matrix.Count; i++)
         {
             for (int j = 0; j < Matrix[i].Count; j++)
             {
-                Console.Write("{0}\t",Matrix[i][j]);
+                matrix += (Matrix[i][j]+" ");
             }
-            Console.WriteLine();
-        }  
-    }
-    
-    public void WriteVertexs()
-    {
-        Console.WriteLine("Вершины в графе: ");
-        foreach (var vertex in Vertexs)
-        {
-            Console.WriteLine(vertex.Number+" "+vertex.Degre);
+            matrix += "\n";
         }
-    }
-    
-    public void WriteEdges()
-    {
-        Console.Write("Вершины в графе: ");
-        foreach (var edge in Edges)
-        {
-            
-            Console.WriteLine(edge.V1.Number+" "+edge.V2.Number+" "+edge.Weight);
-        }
+        return matrix;
     }
 
-    public void AddVertDegree(Vertex v)
-    {
-        v.Degre = Edges.Where(edge => (edge.V1 == v) ^ (edge.V2 == v)).Sum(x => x.Weight);
-    }
 
     public void AddAdjVerts(Edge e)
     {
@@ -67,7 +45,6 @@ public class Graph
         {
             AddVertex(i+1);
         }
-
         for (int i = 0; i < Matrix.Count; i++)
         {
             for (int j = i+1; j < Matrix.Count; j++)
@@ -78,17 +55,9 @@ public class Graph
                 }
             }
         }
-
-        foreach (var vertex in Vertexs)
-        {
-            AddVertDegree(vertex);
-        }
-        
         foreach (var edge in Edges)
         {
             AddAdjVerts(edge);
-            SumDegVert += edge.Weight;
         }
-        
     }
 }
