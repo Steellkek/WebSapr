@@ -5,7 +5,7 @@ public class Population
     public List<Genome> population = new();
     public List<Genome> Parents;
     public double SumFitness;
-    public Graph _graph;
+    public static Graph _graph;
 
     public Population(Graph graph)
     {
@@ -24,34 +24,43 @@ public class Population
 
     public void CreateNewParents()
     {
-        Parents = new List<Genome>();
-        Random ran = new();
-        var chanes = new double[population.Count];
-        chanes[0] = population[0].Fitness / SumFitness;
-        for (int i = 1; i < population.Count; i++)
+        if (SumFitness!=0)
         {
-            chanes[i] =chanes[i-1] +population[i].Fitness / SumFitness;
-        }
+            Parents = new List<Genome>();
+            Random ran = new();
+            var chanes = new double[population.Count];
+            chanes[0] = population[0].Fitness / SumFitness;
 
-        for (int i = 0; i < population.Count; i++)
-        {
-            var y = ran.NextDouble();
-            if (y<chanes[0])
+            for (int i = 1; i < population.Count; i++)
             {
-                Parents.Add(population[0]);
-                continue;
+                chanes[i] =chanes[i-1] +(population[i].Fitness / SumFitness);
             }
-
-            for (int j = 1; j < chanes.Length; j++)
+            Console.Write("");
+            for (int i = 0; i < population.Count; i++)
             {
-                if ((y<chanes[j])&(y>chanes[j-1]))
+                var y = ran.NextDouble();
+                if (y<chanes[0])
                 {
-                    Parents.Add(population[j]);
-                    break;
+                    Parents.Add(population[0]);
+                    continue;
                 }
-            }
-            //Console.WriteLine(5);
 
+                for (int j = 1; j < chanes.Length; j++)
+                {
+                    if ((y<chanes[j])&(y>chanes[j-1]))
+                    {
+                        Parents.Add(population[j]);
+                        break;
+                    }
+                }
+                //Console.WriteLine(5);
+
+            }
+
+        }
+        else
+        {
+            Parents = population.GetRange(0,population.Count);
         }
         //Console.WriteLine(5);
     }

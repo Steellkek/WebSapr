@@ -4,11 +4,20 @@ public class Vertex
 {
     public int Number { get; set; }
 
-    public List<Vertex> AdjVert = new List<Vertex>();
+    private List<Vertex> AdjVert = new List<Vertex>();
 
     public int Degre = 0;
     public Vertex(int number)
     {
         Number = number;
+    }
+    public void AddAdjVert(Vertex v)
+    {
+        AdjVert.Add(v);
+    }
+
+    public List<Vertex> GetAdjVerts()
+    {
+        return AdjVert;
     }
 }

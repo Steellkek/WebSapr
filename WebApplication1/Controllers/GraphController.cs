@@ -18,7 +18,7 @@ public class GraphController : Controller
     }
     
     [HttpGet("gengraph")]
-    public Task<ActionResult<Genome>> GenGraph()
+    public Task<ActionResult<GenAlg>> GenGraph()
     {
         LocalFile lf = new();
         Graph graph = new Graph
@@ -28,14 +28,14 @@ public class GraphController : Controller
         graph.CreateGraph();
         GenAlg v = new GenAlg(graph);
         v.Go();
-        return Task.FromResult<ActionResult<Genome>>(v.BestGen);
+        return Task.FromResult<ActionResult<GenAlg>>(v);
     }
     
-    [HttpGet("new")]
-    public Task<ActionResult<Graph>> NewGraph()
+    [HttpGet("{number}")]
+    public Task<ActionResult<Graph>> NewGraph(int number)
     {
         LocalFile lf = new();
-        lf.WriteMatix(10);
+        lf.WriteMatix(number);
         Graph graph = new Graph();
         graph.Matrix = lf.ReadGraph();
         graph.CreateGraph();

@@ -10,8 +10,9 @@ public class GenAlg
     public double ChanseMutation{ get; set; }
     public double ChanseInversion{ get; set; }
     public Graph _graph{ get; set; }
+    public long time;
     public Genome BestGen = new();
-    public Population _population;
+    private Population _population;
 
     public GenAlg(Graph graph)
     {
@@ -39,16 +40,21 @@ public class GenAlg
             Inversions();
 
             _population.CalculateAverFitness();
-            GetBestGen();
+            GetBestGen(stopwatch);
             //Console.WriteLine(5);
 
         }
-        stopwatch.Stop();
-        Console.WriteLine(stopwatch.ElapsedMilliseconds);
 
+        if (BestGen==null)
+        {
+            BestGen = _population.population[0];
+        }
+        stopwatch.Stop();
+    
+        time=stopwatch.ElapsedMilliseconds;
     }
 
-    public void GetBestGen()
+    public void GetBestGen(Stopwatch stopwatch)
     {
         var b = _population.population.OrderBy(x => x.Fitness).Last();
         if (b.Fitness>BestGen.Fitness)
@@ -56,7 +62,7 @@ public class GenAlg
             //Console.WriteLine(5);
             BestGen.Fitness = b.Fitness;
             BestGen.Gen = b.Gen.GetRange(0,b.Gen.Count);
-            BestGen._graph = _graph;
+            BestGen.time = stopwatch.ElapsedMilliseconds;
         }
     }
     public void Inversions()

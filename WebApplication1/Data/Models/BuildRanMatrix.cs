@@ -14,7 +14,14 @@ public class BuildRanMatrix
             matrix[i, i] = 0;
             for (int j = i + 1; j < N; j++)
             {
-                matrix[i, j] = ran.Next(0, 10);
+                var y = ran.Next(0, 2);
+                var x = 0;
+                if (y==1)
+                {
+                    x=ran.Next(1, 10);
+                }
+
+                matrix[i, j] = x;
                 matrix[j, i] = matrix[i, j]; // обратный порядок индексов
             }
         }

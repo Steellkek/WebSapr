@@ -55,10 +55,10 @@ public class Graph
         v.Degre = Edges.Where(edge => (edge.V1 == v) ^ (edge.V2 == v)).Sum(x => x.Weight);
     }
 
-    public void AddAdjVert(Edge e)
+    public void AddAdjVerts(Edge e)
     {
-        e.V1.AdjVert.Add(e.V2);
-        e.V2.AdjVert.Add(e.V1);
+        e.V1.AddAdjVert(e.V2);
+        e.V2.AddAdjVert(e.V1);
     }
 
     public void CreateGraph()
@@ -86,7 +86,7 @@ public class Graph
         
         foreach (var edge in Edges)
         {
-            AddAdjVert(edge);
+            AddAdjVerts(edge);
             SumDegVert += edge.Weight;
         }
         

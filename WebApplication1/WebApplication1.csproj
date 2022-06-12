@@ -18,4 +18,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\TXT\граф.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\TXT\матрица.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\TXT\разбиение.txt" />
+    </ItemGroup>
+
 </Project>

@@ -5,7 +5,8 @@ public class Genome
     public List<int> Split { get; }
     public List<Vertex> Gen;
     public int Fitness;
-    public Graph _graph;
+    public long time;
+    public static Graph _graph;
 
     public Genome()
     {
@@ -47,7 +48,7 @@ public class Genome
             var y = Gen.GetRange(l,  x);
             foreach (var j in y)
             {
-                var v = j.AdjVert.Intersect(y).ToList();
+                var v = j.GetAdjVerts().GetRange(0,j.GetAdjVerts().Count).Intersect(y).ToList();
                 foreach (var vertex in v)
                 {
                     Fitness += g.Edges

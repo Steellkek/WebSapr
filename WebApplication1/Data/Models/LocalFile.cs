@@ -54,6 +54,7 @@ public class LocalFile
     }
     public void WriteMatix(int n)
     {
+        Random ran = new();
         var x = new BuildRanMatrix().BuildMatrix(n);
         string matrix = "";
         for (int i = 0; i < n; i++)
@@ -64,6 +65,7 @@ public class LocalFile
             }
 
             matrix += "\n";
+
         }  
         XmlDocument xDoc = new XmlDocument();
         xDoc.Load("Files/File.xml");
@@ -90,7 +92,16 @@ public class LocalFile
             }
         }
 
-        xDoc.Save("File.xml");
+        var split = "";
+        while (n!=0)
+        {
+            var y = ran.Next(1, n);
+            split += y + " ";
+            n -= y;
+        }
+        var xNode = xDoc.SelectSingleNode("root/split");
+        xNode.InnerText = split;
+        xDoc.Save("Files/File.xml");
     }
 
     public List<double> ReadGenAlg()
