@@ -16,12 +16,12 @@ public class Genome
     {
         _graph = graph;
         Split=new LocalFile().ReadSplit();
-        Gen = Shuffle(graph);
+        Gen = Shuffle(_graph);
         DetermineFitnes(graph);
     }
 
 
-    private static List<Vertex> Shuffle(Graph graph)
+    private List<Vertex> Shuffle(Graph graph)
     {
         Random rand = new Random();
         List<Vertex> list = graph.Vertexs.GetRange(0, graph.Vertexs.Count);

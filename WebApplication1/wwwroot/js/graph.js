@@ -12,45 +12,39 @@ async function  graph(){
         const graph = await response.json();
         let cy = window.cy = cytoscape({
 
-            container: document.getElementById('cy'), // container to render in
-            boxSelectionEnabled: false,
-            autounselectify: true,
+            container: document.getElementById('cy'), 
+ 
             elements: [],
+            
 
-            style: [
-                {
-                    selector: 'node',
-                    css: {
-                        'content': 'data(id)',
-                        'text-valign': 'center',
-                        'text-halign': 'center',
-                        'text-outline-width': 2,
-                        'text-outline-color': '#888',
-                    }
-                },
-                {
-                    selector: ':parent',
-                    css: {
-                        'text-valign': 'top',
-                        'text-halign': 'center',
-                        'color': "black"
-                    }
-                },
-                {
-                    selector: 'edge',
-                    css: {
-                        'width': 2,
-                        'line-color': '#369',
-                        'target-arrow-color': '#369',
-                        'target-arrow-shape': 'triangle',
-                        'label': 'data(label)',
-                        'font-size': '18px',
-                        'color': '#ff0033'
-                    }
-                }
-            ],
-
-
+            style: cytoscape.stylesheet()
+                .selector('edge')
+                .css({
+                    'width': 1,
+                    'line-color': 'Black',
+                    'target-arrow-color': 'black',
+                    'target-arrow-shape': 'triangle',
+                    'label': 'data(label)',
+                    'font-size': '30px',
+                    'color': '#ff0033'
+                })
+                .selector('node')
+                .css({
+                    'content': 'data(id)',
+                    'text-valign': 'center',
+                    'text-halign': 'center',
+                    'color': 'white',
+                    'text-outline-width': 2,
+                    'text-outline-color': '#888',
+                })
+                .selector(':selected')
+                .css({
+                    'background-color': 'black',
+                    'line-color': 'black',
+                    'target-arrow-color': 'black',
+                    'source-arrow-color': 'black',
+                    'text-outline-color': 'black'
+                })
         });
         graph.vertexs.forEach(((vertex) => {
             cy.add([{group: 'nodes', data: {id: 'v' + vertex.number}, position: {x: 0, y: 0}}])
@@ -107,48 +101,15 @@ async function  gengraph(){
 
                 elements: [],
 
-                style: [
-                    {
-                        selector: 'node',
-                        css: {
-                            'content': 'data(id)',
-                            'text-valign': 'center',
-                            'text-halign': 'center',
-                            'text-outline-width': 2,
-                            'text-outline-color': '#888',
-                        }
-                    },
-                    {
-                        selector: ':parent',
-                        css: {
-                            'text-valign': 'top',
-                            'text-halign': 'center',
-                            'color': "black"
-                        }
-                    },
-                    {
-                        selector: 'edge',
-                        css: {
-                            'width': 2,
-                            'line-color': '#369',
-                            'target-arrow-color': '#369',
-                            'target-arrow-shape': 'triangle',
-                            'label': 'data(label)',
-                            'font-size': '18px',
-                            'color': '#ff0033'
-                        }
-                    }
-                ],
-
                 style: cytoscape.stylesheet()
                     .selector('edge')
                     .css({
-                        'width': 2,
-                        'line-color': '#369',
-                        'target-arrow-color': '#369',
+                        'width': 1,
+                        'line-color': 'Black',
+                        'target-arrow-color': 'black',
                         'target-arrow-shape': 'triangle',
                         'label': 'data(label)',
-                        'font-size': '18px',
+                        'font-size': '30px',
                         'color': '#ff0033'
                     })
                     .selector('node')
@@ -239,52 +200,19 @@ async function  newgraph(){
 
                     let cy = cytoscape({
 
-                        container: document.getElementById('cy'), 
+                        container: document.getElementById('cy'),
 
                         elements: [],
-
-                        style: [
-                            {
-                                selector: 'node',
-                                css: {
-                                    'content': 'data(id)',
-                                    'text-valign': 'center',
-                                    'text-halign': 'center',
-                                    'text-outline-width': 2,
-                                    'text-outline-color': '#888',
-                                }
-                            },
-                            {
-                                selector: ':parent',
-                                css: {
-                                    'text-valign': 'top',
-                                    'text-halign': 'center',
-                                    'color': "black"
-                                }
-                            },
-                            {
-                                selector: 'edge',
-                                css: {
-                                    'width': 2,
-                                    'line-color': '#369',
-                                    'target-arrow-color': '#369',
-                                    'target-arrow-shape': 'triangle',
-                                    'label': 'data(label)',
-                                    'font-size': '18px',
-                                    'color': '#ff0033'
-                                }
-                            }
-                        ],
 
                         style: cytoscape.stylesheet()
                             .selector('edge')
                             .css({
-                                'width': 2,
-                                'line-color': '#369',
-                                'target-arrow-color': '#369',
+                                'width': 1,
+                                'line-color': 'Black',
+                                'target-arrow-color': 'black',
                                 'target-arrow-shape': 'triangle',
                                 'label': 'data(label)',
-                                'font-size': '18px',
+                                'font-size': '30px',
                                 'color': '#ff0033'
                             })
                             .selector('node')

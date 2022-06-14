@@ -2,9 +2,9 @@ namespace SApr.models;
 
 public class Edge
 {
-    public Vertex V1 { get; set; }
-    public Vertex V2 { get; set; }
-    public int Weight { get; set; }
+    public Vertex V1;
+    public Vertex V2;
+    public int Weight;
 
     public Edge(int weight, Vertex v1, Vertex v2)
     {

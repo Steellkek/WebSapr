@@ -1,16 +1,17 @@
-using System.Net.Mime;
 using System.Xml;
 
 namespace SApr.models;
 
 public class LocalFile
 {
+    private string FileWay = "Files/File.xml";
+    private string ResultWay = "Files/Result.xml";
     public List<List<int>> ReadGraph()
     {
         List<List<int>> matrix = new();
         int length=1;
         XmlDocument xDoc = new XmlDocument();
-        xDoc.Load("Files/File.xml");
+        xDoc.Load(FileWay);
         var xRoot = xDoc.SelectSingleNode("root/graph");
         if (xRoot != null)
         {
@@ -38,7 +39,7 @@ public class LocalFile
     {
         List<int> split;
         XmlDocument xDoc = new XmlDocument();
-        xDoc.Load("Files/File.xml");
+        xDoc.Load(FileWay);
         var xRoot = xDoc.SelectSingleNode("root/split");
         split = xRoot
             .InnerText
@@ -50,7 +51,7 @@ public class LocalFile
     public void WriteMatix(int n)
     {
         Random ran = new();
-        var x = new BuildRanMatrix().BuildMatrix(n);
+        var x = BuildMatrix(n);
         string matrix = "";
         for (int i = 0; i < n; i++)
         {
@@ -92,12 +93,34 @@ public class LocalFile
         xNode.InnerText = split;
         xDoc.Save("Files/File.xml");
     }
+    private int[,] BuildMatrix(int N)
+    {
+        Random ran = new Random();
+        int[,] matrix = new int[N, N];
+        for (int i = 0; i < N; i++)
+        {
+            matrix[i, i] = 0;
+            for (int j = i + 1; j < N; j++)
+            {
+                var check = ran.Next(0, 3);
+                var el = 0;
+                if (check==2)
+                {
+                    el=ran.Next(1, 20);
+                }
 
+
+                matrix[i, j] = el;
+                matrix[j, i] = matrix[i, j]; 
+            }
+        }
+        return matrix;
+    }
     public List<double> ReadGenAlg()
     {
         List<double> split = new();
         XmlDocument xDoc = new XmlDocument();
-        xDoc.Load("Files/File.xml");
+        xDoc.Load(FileWay);
         var xRoot = xDoc.SelectSingleNode("root/GenAlg");
         if (xRoot != null)
         {
@@ -112,7 +135,7 @@ public class LocalFile
     public void WriteResult(GenAlg genAlg)
     {
         XmlDocument xDoc = new XmlDocument();
-        xDoc.Load("Files/Result.xml");
+        xDoc.Load(ResultWay);
         var xRoot = xDoc.SelectSingleNode("root/Result");
         if (xRoot != null)
         {

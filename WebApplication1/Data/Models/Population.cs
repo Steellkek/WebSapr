@@ -3,9 +3,9 @@ namespace SApr.models;
 public class Population
 {
     public List<Genome> population = new();
-    public List<Genome> Parents;
+    public List<Genome> Parents = new();
     public double SumFitness;
-    public static Graph _graph;
+    public Graph _graph;
 
     public Population(Graph graph)
     {

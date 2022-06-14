@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Генетический алгоритм</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="js/cytoscape.min.js"></script>
     <style>
@@ -10,10 +10,9 @@
         #cy {
             color: #d3d3d3;
             font: 12pt arial;
-            width: 1500px;
-            height: 800px;
+            height: 900px;
             border: 1px solid #444444;
-            background-color: #222222;
+            background-color: #ffffff;
         }
         p{
             margin-bottom: 1px;
@@ -26,7 +25,7 @@
         <div class="row">
             <button id="graph" onclick="graph()" >Загрузить граф</button>
             <button id="gengraph" onclick="gengraph()">Запустить генетический алгоритм</button>
-            <button id="newgraph" onclick="newgraph()">Создать новый граф и разбиение</button>
+            <button id="newgraph" onclick="newgraph()">Создать новый граф и разрез</button>
             <input id="number" type="number" aria-label="Введите кол-во вершин">
         </div>
     </div>
@@ -56,19 +55,19 @@
                         <font color="#8a2be2"><p id="ChanseInversion"></p></font>
                     </div>
                     <div class="g-col-4">
-                        <p>Нужное разбиение:</p>
+                        <p>Нужный разрез:</p>
                         <font color="#8a2be2"><p id="NeedSplit"></p></font>
                     </div>
                     <div class="g-col-4">
-                        <p>Полученное разбиение:</p>
+                        <p>Полученный разрез:</p>
                         <font color="#8a2be2"><p id="Split"></p></font>
                     </div>
                     <div class="g-col-4">
-                        <p>ЦФ для разбиения:</p>
+                        <p>ЦФ для разреза:</p>
                         <font color="#8a2be2"><p id="CF"></p></font>
                     </div>
                     <div class="g-col-4">
-                        <p>Время для нахождения лучшего разбиения:</p>
+                        <p>Время для нахождения лучшего разреза:</p>
                         <font color="#8a2be2"><p id=TimeBestGen></p></font>
                     </div>
                     <div class="g-col-4">
@@ -80,5 +79,5 @@
         </div>
     </div>
 </body>
-<script type="text/javascript" src="js/Index.js"></script>
+<script type="text/javascript" src="js/graph.js"></script>
 </html>

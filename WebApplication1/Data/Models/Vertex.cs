@@ -2,7 +2,7 @@ namespace SApr.models;
 
 public class Vertex
 {
-    public int Number { get; set; }
+    public int Number;
 
     private List<Vertex> AdjVert = new List<Vertex>();
 

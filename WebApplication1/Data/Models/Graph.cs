@@ -2,7 +2,7 @@ namespace SApr.models;
 
 public class Graph
 {
-    public List<List<int>> Matrix { get; set; }
+    public List<List<int>> Matrix;
     public List<Edge> Edges = new();
     public List<Vertex> Vertexs=new();
 
